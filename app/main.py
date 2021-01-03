@@ -7,6 +7,8 @@ import datetime
 import os
 from os.path import join, dirname
 import json
+import pandas as pd
+import mplfinance as mpf
 import pandas_datareader.stooq as stooq
 from dotenv import load_dotenv
 from dateutil.relativedelta import relativedelta
@@ -42,8 +44,19 @@ def send_slack_notification(row_dict):
     })
     requests.post(webhook, data=data)
 
+def generate_stock_chart_image():
+    """
+    Generate a six-month stock chart image with mplfinance
+    """
+    dataframe = pd.read_csv(FILENAME, index_col=0, parse_dates=True)
+    # The return value `Date` from stooq is sorted by asc, so change it to desc for plot
+    dataframe = dataframe.sort_values('Date')
+    mpf.plot(dataframe, type='candle', figratio=(12,4),
+         volume=True, mav=(5, 25), style='yahoo',
+         savefig=f"{str(today)}.png")
+
 today = datetime.date.today()
-start_date = today - relativedelta(years=1)
+start_date = today - relativedelta(months=3)
 end_date = today
 
 dotenv_path = join(dirname(__file__), '.env')
@@ -63,4 +76,8 @@ with open(FILENAME, 'r', encoding="utf-8") as f:
         if i == 0:
             send_slack_notification(row)
 
+generate_stock_chart_image()
+
+# Remove files(if the files remains, they will be accumulated as garbage)
 os.remove(FILENAME)
+os.remove(f"{str(today)}.png")
