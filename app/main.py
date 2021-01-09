@@ -55,29 +55,38 @@ def generate_stock_chart_image():
          volume=True, mav=(5, 25), style='yahoo',
          savefig=f"{str(today)}.png")
 
-today = datetime.date.today()
-start_date = today - relativedelta(months=3)
-end_date = today
+def generate_csv_with_datareader():
+    start_date = today - relativedelta(months=3)
+    stooq_reader = stooq.StooqDailyReader(stock_code, start=start_date, end=today)
+    stooq_reader.read().to_csv(FILENAME)
 
+def remove_image_and_csv_files():
+    # Remove files(if the files remains, they will be accumulated as garbage)
+    os.remove(FILENAME)
+    os.remove(f"{str(today)}.png")
+
+def main():
+    generate_csv_with_datareader()
+    with open(FILENAME, 'r', encoding="utf-8") as file:
+        # Skip header row
+        reader = csv.reader(file)
+        header = next(reader)
+        for i, row in enumerate(csv.DictReader(file, header)):
+            # Send only the most recent data to Slack notification
+            if i == 0:
+                send_slack_notification(row)
+
+    generate_stock_chart_image()
+    remove_image_and_csv_files()
+
+# Load env variants
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 stock_code = os.environ.get("STOCK_CODE")
 webhook = os.environ.get("INCOMING_WEBHOOK")
 
-stooq_reader = stooq.StooqDailyReader(stock_code, start=start_date, end=end_date)
-stooq_data = stooq_reader.read()
+# Get today's date for getting the stock price and csv&image filename
+today = datetime.date.today()
 FILENAME = '%s.csv' % str(today)
-file = stooq_data.to_csv(FILENAME)
 
-with open(FILENAME, 'r', encoding="utf-8") as f:
-    reader = csv.reader(f)
-    header = next(reader)
-    for i, row in enumerate(csv.DictReader(f, header)):
-        if i == 0:
-            send_slack_notification(row)
-
-generate_stock_chart_image()
-
-# Remove files(if the files remains, they will be accumulated as garbage)
-os.remove(FILENAME)
-os.remove(f"{str(today)}.png")
+main()
