@@ -57,6 +57,7 @@ def main():
     The main function that will be executed when this Python file is executed
     """
     generate_csv_with_datareader()
+    generate_stock_chart_image()
     with open(FILENAME, 'r', encoding="utf-8") as file:
         # Skip header row
         reader = csv.reader(file)
@@ -64,16 +65,14 @@ def main():
         for i, row in enumerate(csv.DictReader(file, header)):
             # Send only the most recent data to Slack notification
             if i == 0:
-                slack.Slack(webhook, today, stock_code, row).post()
+                slack.Slack(today, row).post()
 
-    generate_stock_chart_image()
     remove_image_and_csv_files()
 
 # Load env variants
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 stock_code = os.environ.get("STOCK_CODE")
-webhook = os.environ.get("INCOMING_WEBHOOK")
 
 # Get today's date for getting the stock price and csv&image filename
 today = datetime.date.today()
