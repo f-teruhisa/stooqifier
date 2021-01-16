@@ -4,10 +4,8 @@ services:
     build:
       context: .
       dockerfile: "Dockerfile"
-    command: python app/main.py
+    command: python main.py
     volumes:
       - .:/work
-      # Setting dir for virtualenv
-      - python-packages:/root/.local/share
 volumes:
   python-packages:

@@ -7,4 +7,4 @@ up:
 	docker-compose up
 
 lint:
-	docker-compose run app pylint ./app
+	docker-compose run --rm app pylint main.py ./notifiers

@@ -74,5 +74,5 @@ class Slack():
         POST request to Slack file upload API
         API docs: https://api.slack.com/methods/files.upload
         """
-        file = {'file': open(f"{str(self.date)}.png", 'rb')}
+        file = {'file': open(f"tmp/{str(self.date)}.png", 'rb')}
         requests.post(url="https://slack.com/api/files.upload",params=self.params, files=file)
