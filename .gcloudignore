@@ -16,7 +16,7 @@
 node_modules
 #!include:.gitignore
 
-.sample.env
+tmp
 Makefile
 Dockerfile
 docker-compose.yml
