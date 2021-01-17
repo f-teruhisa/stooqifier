@@ -45,7 +45,10 @@ def generate_csv_with_datareader():
     stooq_reader = stooq.StooqDailyReader(stock_code, start=start_date, end=today)
     stooq_reader.read().to_csv(f"/tmp/{str(today)}.csv")
 
-def main():
+# pylint: disable=W0613
+# When main() is executed in CloudFunction, (event,context) are automatically specified as arguments
+# https://cloud.google.com/functions/docs/writing/background?hl=ja#function_parameters
+def main(event, context):
     """
     The main function that will be executed when this Python file is executed
     """
@@ -73,5 +76,3 @@ if not os.path.isdir('/tmp'):
     os.mkdir('/tmp')
 
 FILENAME = '%s.csv' % str(today)
-
-main()
