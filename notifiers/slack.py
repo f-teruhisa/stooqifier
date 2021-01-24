@@ -1,13 +1,12 @@
 """
-Python modules
+json: Format the data to be sent by the SLack API into JSON
 requests: HTTP client
-
-Internal module
-env: Module for geting environment variables from .env file
 """
 
+import os
+from os.path import join, dirname
+from dotenv import load_dotenv
 import requests
-import env
 
 class Slack():
     """
@@ -55,8 +54,10 @@ class Slack():
         API docs: https://api.slack.com/methods/files.upload
         :return: dict
         """
-        token = env.Env('slack_api_token').get()
-        channel_id = env.Env('slack_channel_id').get()
+        dotenv_path = join(dirname(__file__), '.env')
+        load_dotenv(dotenv_path)
+        token = os.environ.get("SLACK_API_TOKEN")
+        channel_id =  os.environ.get("SLACK_CANNEL_ID")
 
         params = {
             'token':token,
@@ -73,10 +74,5 @@ class Slack():
         POST request to Slack file upload API
         API docs: https://api.slack.com/methods/files.upload
         """
-        url = "https://slack.com/api/files.upload"
         file = {'file': open(f"/tmp/{str(self.date)}.png", 'rb')}
-        request = requests.post(url=url, params=self.params, files=file)
-
-        # Output response from the Slack API with requests
-        print(request.status_code)
-        print(request.text)
+        requests.post(url="https://slack.com/api/files.upload",params=self.params, files=file)
