@@ -18,6 +18,8 @@ Stooqifier is an automatic stock price [Slack](https://slack.com/intl/en-in/) no
 - The stock price update timing depends on [Stooq.com](https://stooq.com/)
     - As of January 2021, stock prices up to the previous day can be obtained in most cases
 
+※日本語解説記事はこちら(Japanese Description is here 👉): https://zenn.dev/t_fukumoto/articles/e5e0fe753d5726
+
 ## Install
 
 ```
