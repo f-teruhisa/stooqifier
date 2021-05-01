@@ -9,6 +9,9 @@ Stooqifier is an automatic stock price [Slack](https://slack.com/intl/en-in/) no
 (ex. [6095.JP](https://stooq.com/q/?s=6095.JP)'s stock price configured)
 
 ## Description
+
+![architecture](/images/architecture.png)
+
 - Notification script written in Python 3.9 that runs on [Google Cloud Functions](https://cloud.google.com/functions)
 - This script can be executed periodically by setting up with [Google Cloud Scheduler](https://cloud.google.com/scheduler).
 - Can freely set the stock code and the Slack channel to be notified
@@ -30,6 +33,9 @@ $ gcloud functions deploy #{FUNCTION_NAME} --entry-point main --project #{PROJEC
 ```
 
 ### Set some variables in `.env`
+
+![set_env_variables](/images/set_env_variables.png)
+
 - Change the file name of `.sample.env` to `.env`
 - Create Bots with [Slack Bots](https://api.slack.com/bot-users) and generate `SLACK_API_TOKEN`
 - `SLACK_CHANNEL ID` is being shown via the web browser of Slack
