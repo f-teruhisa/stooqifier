@@ -59,9 +59,15 @@ def main(event, context):
         reader = csv.reader(file)
         header = next(reader)
         for i, row in enumerate(csv.DictReader(file, header)):
-            # Send only the most recent data to Slack notification
+            # The most recent data to Slack notification
             if i == 0:
-                slack.Slack(today, row).post()
+                ohlcv = row
+            elif i == 1:
+                # Previous day's data for compareing the most recent data
+                prev_ohlcv = row
+
+    # Send to Slack notifiaction
+    slack.Slack(today, ohlcv, prev_ohlcv).post()
 
 # Load env variants
 dotenv_path = join(dirname(__file__), '.env')
