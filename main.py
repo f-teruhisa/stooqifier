@@ -25,6 +25,7 @@ from dotenv import load_dotenv
 from dateutil.relativedelta import relativedelta
 
 from notifiers import slack
+from message import message
 
 def generate_stock_chart_image():
     """
@@ -67,7 +68,8 @@ def main(event, context):
                 prev_ohlcv = row
 
     # Send to Slack notifiaction
-    slack.Slack(today, ohlcv, prev_ohlcv).post()
+    text = message.Message(today, ohlcv, prev_ohlcv).content
+    slack.Slack(today, text).post()
 
 # Load env variants
 dotenv_path = join(dirname(__file__), '.env')
