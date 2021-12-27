@@ -22,3 +22,6 @@ Dockerfile
 docker-compose.yml
 images
 README.md
+test
+.pytest_cache
+.github
