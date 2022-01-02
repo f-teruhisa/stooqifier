@@ -1,17 +1,19 @@
 """
+datetime: Get the date for test date.
 sys: For import `message` modules from `message/message`
 pytest: For using fixture with pytest
 """
 
+import datetime
 import sys
 import pytest
 sys.path.append('.')
 
 @pytest.fixture
-def ohlcv():
+def ohlcv_data():
     """
     Create OHLCV test data
-    :return: Hash
+    :return: hash
     """
     data = {
         'Date': '2020-12-29',
@@ -24,10 +26,10 @@ def ohlcv():
     return data
 
 @pytest.fixture
-def prev_ohlcv():
+def prev_ohlcv_data():
     """
     Create yesterday OHLCV test data
-    :return: Hash
+    :return: hash
     """
     data = {
         'Date': '2020-12-28',
@@ -38,3 +40,11 @@ def prev_ohlcv():
         'Volume': '820000'
     }
     return data
+
+@pytest.fixture
+def today_datetime():
+    """
+    Today datetime
+    :return: datetime
+    """
+    return datetime.date.today()

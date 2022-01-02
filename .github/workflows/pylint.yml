@@ -35,4 +35,4 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - run: pylint main.py ./notifiers
+      - run: pylint main.py ./notifiers ./message ./test

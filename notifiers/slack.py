@@ -30,7 +30,7 @@ class Slack():
         """
         Setting parameters when request with slack's files.upload API
         API docs: https://api.slack.com/methods/files.upload
-        :return: dict
+        :return: hash
         """
         dotenv_path = join(dirname(__file__), '.env')
         load_dotenv(dotenv_path)
