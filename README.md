@@ -2,6 +2,7 @@ Stooqifier
 ====
 [![Pylint](https://github.com/f-teruhisa/stooqifier/actions/workflows/pylint.yml/badge.svg)](https://github.com/f-teruhisa/stooqifier/actions/workflows/pylint.yml)
 [![pytest](https://github.com/f-teruhisa/stooqifier/actions/workflows/pytest.yml/badge.svg)](https://github.com/f-teruhisa/stooqifier/actions/workflows/pytest.yml)
+[![codecov](https://codecov.io/gh/f-teruhisa/stooqifier/branch/master/graph/badge.svg?token=WSFICC2GBH)](https://codecov.io/gh/f-teruhisa/stooqifier)
 
 Stooqifier is an automatic stock price [Slack](https://slack.com/intl/en-in/) notification with chart image script that with [pandas-datareader](https://github.com/pydata/pandas-datareader) call [Stooq.com](https://stooq.com/) API.
 
