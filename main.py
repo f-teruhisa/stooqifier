@@ -84,3 +84,4 @@ if not os.path.isdir('/tmp'):
     os.mkdir('/tmp')
 
 FILENAME = '%s.csv' % str(today)
+main(None, None)
