@@ -11,3 +11,9 @@ lint:
 
 pytest:
 	docker-compose run --rm app pytest
+
+typehint:
+	docker-compose run --rm app mypy .
+
+pipinstall:
+	docker-compose run --rm app pip install -r requirements.txt
